@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../src/css/output.css">
+    <link rel="shortcut icon" href="../public/img/favicon.svg">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <title>Вход | План Эксперт</title>
+</head>
+<body class="bg-gray-50 selection:bg-purple-300/80 selection:text-black/90 min-h-screen">
+    <main class="w-full h-screen flex items-center justify-center px-10">
+        <div class="max-w-6xl w-full h-auto p-10 rounded-xl border border-purple-300 bg-white mx-auto my-0">
+            <div class="grid grid-cols-2 max-[1050px]:!grid-cols-1">
+                <div class="w-1/2">
+                    <a href="../index.html">
+                        <img src="../public/img/logo.svg" alt="" class="w-64 transition-all hover:opacity-80">
+                    </a>
+                </div>
+                <div class="w-full">
+                    <form class="flex flex-col pl-10 gap-5 max-[1050px]:!pl-0">
+                        <div class="flex flex-col gap-1">
+                            <label class="text-black/70">Электронная почта</label>
+                            <input type="text" class="border border-gray-300 w-full h-10 px-4 rounded-md outline-none transition-all focus:ring-2 focus:ring-purple-300 focus:!border-purple-300">
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="text-black/70">Пароль</label>
+                            <input type="password" class="border border-gray-300 w-full h-10 px-4 rounded-md outline-none transition-all focus:ring-2 focus:ring-purple-300 focus:!border-purple-300">
+                        </div>
+                        <button type="submit" class="bg-purple-300 py-2 rounded-lg font-semibold text-black/70 transition-all hover:bg-purple-400 hover:text-black/90">
+                            Войти
+                        </button>
+                        <div class="flex justify-end">
+                            <a href="register.html" class="text-purple-300 font-black transition-all hover:text-purple-400">Создать аккаунт</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
