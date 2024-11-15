@@ -31,8 +31,23 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User ::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'name.required' => 'Поле имя обязательно для заполнения.',
+            'name.string' => 'Поле имя должно быть строкой.',
+            'name.max' => 'Поле имя не должно превышать :max символов.',
+
+            'email.required' => 'Поле email обязательно для заполнения.',
+            'email.string' => 'Поле email должно быть строкой.',
+            'email.lowercase' => 'Поле email должно содержать только строчные буквы.',
+            'email.email' => 'Поле email должно быть действительным адресом электронной почты.',
+            'email.max' => 'Поле email не должно превышать :max символов.',
+            'email.unique' => 'Этот email уже занят.',
+
+            'password.required' => 'Поле пароль обязательно для заполнения.',
+            'password.confirmed' => 'Пароли не совпадают.',
+            'password' => 'Пароль должен соответствовать установленным требованиям.',
         ]);
 
         $user = User::create([

@@ -19,12 +19,20 @@
                         <div class="flex flex-col gap-1">
                             <label class="text-black/70">Электронная почта</label>
                             <input type="text" name="email"
-                                class="border border-gray-300 w-full h-10 px-4 rounded-md outline-none transition-all focus:ring-2 focus:ring-purple-300 focus:!border-purple-300">
+                                class="border border-gray-300 w-full h-10 px-4 rounded-md outline-none transition-all focus:ring-2 focus:ring-purple-300 focus:!border-purple-300 @error('email') bg-red-50 text-red-900 placeholder-red-700 @enderror">
+                            @error('email')
+                                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Ошибка:</span>
+                                    {{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="flex flex-col gap-1">
                             <label class="text-black/70">Пароль</label>
                             <input type="password" name="password"
-                                class="border border-gray-300 w-full h-10 px-4 rounded-md outline-none transition-all focus:ring-2 focus:ring-purple-300 focus:!border-purple-300">
+                                class="border border-gray-300 w-full h-10 px-4 rounded-md outline-none transition-all focus:ring-2 focus:ring-purple-300 focus:!border-purple-300 @error('password') bg-red-50 text-red-900 placeholder-red-700 @enderror">
+                            @error('password')
+                                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Ошибка:</span>
+                                    {{ $message }}</p>
+                            @enderror
                         </div>
                         <button type="submit"
                             class="bg-purple-300 py-2 rounded-lg font-semibold text-black/70 transition-all hover:bg-purple-400 hover:text-black/90">
