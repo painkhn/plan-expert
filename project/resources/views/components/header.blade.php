@@ -5,7 +5,7 @@
             <img src="{{ asset('/img/logo.svg') }}" alt="" class="w-40 transition-all hover:opacity-80">
         </a>
         <div class="flex">
-            <a href="pages/projects.html"
+            <a href="{{ route('panel.index') }}"
                 class="h-16 text-zinc-600 font-semibold texd-lg py-2 px-4 transition-all hover:bg-purple-50 hover:text-zinc-800 rounded-lg flex items-center">
                 Панель задач
             </a>
