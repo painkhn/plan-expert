@@ -8,12 +8,39 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Project;
+use App\Models\User;
+use App\Models\Invite;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+
+    public function search(Request $request) {
+        $user = User::where('name', $request->name)->first();
+
+        if ($user) {
+            if ($user->id === Auth::id()) {
+                return redirect()->route('profile.index');
+            }
+            return redirect()->route('profile.index', ['user' => $user->id]);
+        } else {
+            return redirect()->route('profile.index');
+        }
+    }
+
+    public function index($user = null) {
+        $finduser = null;
+        if ($user) {
+            $finduser = User::findOrFail($user);
+        }
+        return view('profile', [
+            'count_projects' => Project::where('user_id', Auth::id())->count(),
+            'participant' => $finduser,
+            'projects' => Project::where('user_id', Auth::id())->get(),
+            'invite' => Invite::with('user', 'project')->where('user_id', Auth::id())->where('status', 'awaits')->get()
+        ]);
+    }
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -21,9 +48,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -37,9 +61,7 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [

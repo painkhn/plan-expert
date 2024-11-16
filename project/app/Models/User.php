@@ -29,8 +29,21 @@ class User extends Authenticatable
         ];
     }
 
+    // Связь с моделью Project
     public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+
+    // Связь с моделью Task
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    // Связь с моделью Invite
+    public function invites()
+    {
+        return $this->hasMany(Invite::class);
     }
 }
