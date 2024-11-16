@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Models\Project;
 
 class PanelController extends Controller
 {
@@ -10,6 +12,10 @@ class PanelController extends Controller
     * Отображение страницы Панель задач
     */
     public function index() {
-        return view('panel');
+        // Изменить, в заваисимости от завершенности задач
+        return view('panel', [
+            'completed' => null,
+            'unfinished' => Project::where('user_id', Auth::id())->get()
+        ]);
     }
 }

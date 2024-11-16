@@ -9,7 +9,7 @@
                 class="h-16 text-zinc-600 font-semibold texd-lg py-2 px-4 transition-all hover:bg-purple-50 hover:text-zinc-800 rounded-lg flex items-center">
                 Панель задач
             </a>
-            <a href="pages/create_project.html"
+            <a href="{{ route('project.index') }}"
                 class="h-16 text-zinc-600 font-semibold texd-lg py-2 px-4 transition-all hover:bg-purple-50 hover:text-zinc-800 rounded-lg flex items-center">
                 Создать проект
             </a>
