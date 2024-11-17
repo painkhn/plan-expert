@@ -13,10 +13,12 @@
                 class="h-16 text-zinc-600 font-semibold texd-lg py-2 px-4 transition-all hover:bg-purple-50 hover:text-zinc-800 rounded-lg flex items-center">
                 Создать проект
             </a>
-            <a href="pages/admin.html"
-                class="h-16 text-zinc-600 font-semibold texd-lg py-2 px-4 transition-all hover:bg-purple-50 hover:text-zinc-800 rounded-lg flex items-center">
-                Панель администратора
-            </a>
+            @if (Auth::user() && Auth::user()->isAdmin == 1)
+                <a href="{{ route('admin.index') }}"
+                    class="h-16 text-zinc-600 font-semibold texd-lg py-2 px-4 transition-all hover:bg-purple-50 hover:text-zinc-800 rounded-lg flex items-center">
+                    Панель администратора
+                </a>
+            @endif
         </div>
     </nav>
     <nav>

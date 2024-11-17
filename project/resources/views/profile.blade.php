@@ -122,13 +122,13 @@
                     <p class="text-xl font-bold text-gray-800 flex items-center gap-2">
                         Незаконченных проектов:
                         <span class="text-purple-400 px-2 py-1 bg-purple-50 rounded-lg">
-                            10
+                            {{ $unfinished_projects_count }}
                         </span>
                     </p>
                     <p class="text-xl font-bold text-gray-800 flex items-center gap-2">
                         Завершённых проектов:
                         <span class="text-purple-400 px-2 py-1 bg-purple-50 rounded-lg">
-                            22
+                            {{ $finished_projects_count }}
                         </span>
                     </p>
                 </div>

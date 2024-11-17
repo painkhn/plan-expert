@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('deadline');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('project_id');
+            $table->enum('status', ['done', 'not_done'])->default('not_done');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

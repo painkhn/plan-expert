@@ -14,8 +14,12 @@ class InviteController extends Controller
             'user_id' => 'required|integer|min:1',
         ]);
         $invite = Invite::where('project_id', $request->project)->where('user_id', $request->user_id)->orderBy('created_at', 'desc')->first();
-        if ($invite->status != 'awaited') {
-            return redirect()->back();
+
+        if ($invite && $invite->status != 'awaited') {
+            return redirect()->back()->with('flash_message', [
+                'status' => 'Внимание!',
+                'message' => 'Приглавшение уже отправлено'
+            ]);
         } else {
             Invite::create([
                 'project_id' => $request->project,
@@ -24,7 +28,10 @@ class InviteController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('flash_message', [
+            'status' => 'Успешно!',
+            'message' => ' Приглашение было отправлено'
+        ]);
     }
 
     public function update($id, Request $request) {
@@ -33,9 +40,15 @@ class InviteController extends Controller
         $invite->status = $status;
         $invite->save();
         if ($status == 'accepted'){
-            return redirect(route('project.show', [$id]));
+            return redirect(route('project.show', [$id]))->with('flash_message', [
+                'status' => 'Успешно!',
+                'message' => 'Приглавшение принято'
+            ]);
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('flash_message', [
+                'status' => 'Успешно!',
+                'message' => ' Приглашение было отклонено'
+            ]);
         }
     }
 }

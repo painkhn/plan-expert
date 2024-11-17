@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
-use App\Models\Project;
+use App\Models\{Project, Invite};
 
 class ProjectController extends Controller
 {
@@ -14,8 +14,17 @@ class ProjectController extends Controller
     }
 
     public function show($id) {
+        $project = Project::with(['tasks' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->findOrFail($id);
+        $finishedTasksCount = $project->tasks->where('status', 'done')->count();
+        $unfinishedTasksCount = $project->tasks->where('status', 'not_done')->count();
+
         return view('project.index', [
-            'project' => Project::findOrFail($id)
+            'project' => $project,
+            'users' => Invite::with('user')->where('project_id', $project->id)->get(),
+            'finished_tasks_count' => $finishedTasksCount,
+            'unfinished_tasks_count' => $unfinishedTasksCount,
         ]);
     }
 
@@ -39,7 +48,10 @@ class ProjectController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return redirect()->back();
+        return redirect(route('project.show', [$user->id]))->with('flash_message', [
+            'status' => 'Успешно',
+            'message' => 'Проект создан'
+        ]);
     }
 
 }

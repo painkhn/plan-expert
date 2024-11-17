@@ -33,11 +33,24 @@ class ProfileController extends Controller
         if ($user) {
             $finduser = User::findOrFail($user);
         }
+
+        $projects = Project::where('user_id', Auth::id())->get();
+
+        $unfinishedProjectsCount = $projects->filter(function ($project) {
+            return $project->tasks()->where('status', 'not_done')->exists();
+        })->count();
+
+        $finishedProjectsCount = $projects->filter(function ($project) {
+            return $project->tasks()->where('status', 'not_done')->doesntExist();
+        })->count();
+
         return view('profile', [
-            'count_projects' => Project::where('user_id', Auth::id())->count(),
+            'count_projects' => $projects->count(),
             'participant' => $finduser,
-            'projects' => Project::where('user_id', Auth::id())->get(),
-            'invite' => Invite::with('user', 'project')->where('user_id', Auth::id())->where('status', 'awaits')->get()
+            'projects' => $projects,
+            'invite' => Invite::with('user', 'project')->where('user_id', Auth::id())->where('status', 'awaits')->get(),
+            'unfinished_projects_count' => $unfinishedProjectsCount,
+            'finished_projects_count' => $finishedProjectsCount,
         ]);
     }
 

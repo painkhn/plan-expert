@@ -30,26 +30,27 @@
                             <p class="text-xl font-bold text-gray-800 flex items-center gap-2">
                                 Всего проектов:
                                 <span class="text-purple-400 px-2 py-1 bg-purple-50 rounded-lg">
-                                    32
+                                    {{ $totalProjectsCount }}
                                 </span>
                             </p>
                             <p class="text-xl font-bold text-gray-800 flex items-center gap-2">
                                 Незаконченных проектов:
                                 <span class="text-purple-400 px-2 py-1 bg-purple-50 rounded-lg">
-                                    10
+                                    {{ $unfinishedProjectsCount }}
                                 </span>
                             </p>
                             <p class="text-xl font-bold text-gray-800 flex items-center gap-2">
                                 Завершённых проектов:
                                 <span class="text-purple-400 px-2 py-1 bg-purple-50 rounded-lg">
-                                    22
+                                    {{ $finishedProjectsCount }}
                                 </span>
                             </p>
                         </div>
                     </div>
                     <div class="pr-10 max-[1130px]:pr-0">
-                        <div class="flex items-center mb-5 gap-2">
-                            <input type="search" name="" id=""
+                        <form class="flex items-center mb-5 gap-2" method="POST" action="{{ route('panel.search') }}">
+                            @csrf
+                            <input type="search" name="word" id="word"
                                 class="w-full h-10 border-gray-300 rounded-lg text-gray-800 transition-all focus:ring-2 focus:ring-purple-300 focus:!border-purple-300"
                                 placeholder="Введите название проекта">
                             <button>
@@ -60,70 +61,60 @@
                                         d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
                                 </svg>
                             </button>
-                        </div>
-                        <select name="" id=""
-                            class="mb-5 w-full text-center border-gray-300 rounded-lg font-bold text-gray-800/80 transition-all hover:border-purple-300 cursor-pointer focus:ring-2 focus:!ring-purple-300 focus:!border-purple-300">
-                            <option value="">
-                                Сортировать
-                            </option>
-                            <option value="value">
-                                По названию
-                            </option>
-                            <option value="value">
-                                По дате создания
-                            </option>
-                            <option value="value">
-                                По количеству задач
-                            </option>
-                            <option value="value">
-                                Завершённые
-                            </option>
-                            <option value="value">
-                                Незавершённые
-                            </option>
-                        </select>
-                        @if ($completed)
+                        </form>
+                        <form action="{{ route('panel.sort') }}" method="POST">
+                            @csrf
+                            <select name="sort_by" id="sort_by"
+                                class="mb-5 w-full text-center border-gray-300 rounded-lg font-bold text-gray-800/80 transition-all hover:border-purple-300 cursor-pointer focus:ring-2 focus:!ring-purple-300 focus:!border-purple-300"
+                                onchange="this.form.submit()">
+                                <option value="">
+                                    Сортировать
+                                </option>
+                                <option value="name">
+                                    По названию
+                                </option>
+                                <option value="created_at">
+                                    По дате создания
+                                </option>
+                                <option value="task_count">
+                                    По количеству задач
+                                </option>
+                                <option value="completed">
+                                    Завершённые
+                                </option>
+                                <option value="unfinished">
+                                    Незавершённые
+                                </option>
+                            </select>
+                        </form>
+                        @if (count($completed) > 0)
                             <ul
                                 class="grid grid-cols-2 gap-5 max-[1130px]:!grid-cols-3 max-[900px]:!grid-cols-2 max-[630px]:!grid-cols-1 mb-5">
-                                <li>
-                                    <a href="project_page.html">
-                                        <div href="#!"
-                                            class="relative w-full h-44 rounded-lg border bg-green-400/10 border-gray-300 p-5 overflow-hidden transition-all hover:ring-2 hover:ring-purple-300">
-                                            <h3 class="text-xl font-bold text-gray-800 mb-2">
-                                                Название проекта
-                                            </h3>
-                                            <ul class="ml-5">
-                                                <li class="list-disc text-black/70 font-semibold">
-                                                    Задача
-                                                </li>
-                                                <li class="list-disc text-black/70 font-semibold">
-                                                    Задача
-                                                </li>
-                                                <li class="list-disc text-black/70 font-semibold">
-                                                    Задача
-                                                </li>
-                                                <li class="list-disc text-black/70 font-semibold">
-                                                    Задача
-                                                </li>
-                                                <li class="list-disc text-black/70 font-semibold">
-                                                    Задача
-                                                </li>
-                                                <li class="list-disc text-black/70 font-semibold">
-                                                    Задача
-                                                </li>
-                                                <li class="list-disc text-black/70 font-semibold">
-                                                    Задача
-                                                </li>
-                                            </ul>
+                                @foreach ($completed as $item)
+                                    <li>
+                                        <a href="{{ route('project.show', [$item->id]) }}">
                                             <div
-                                                class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-green-400/30 to-transparent blur">
+                                                class="relative w-full h-44 rounded-lg border bg-green-400/10 border-gray-300 p-5 overflow-hidden transition-all hover:ring-2 hover:ring-purple-300">
+                                                <h3 class="text-xl font-bold text-gray-800 mb-2">
+                                                    {{ $item->name }}
+                                                </h3>
+                                                <ul class="ml-5">
+                                                    @foreach ($item->tasks as $item)
+                                                        <li class="list-disc text-black/70 font-semibold">
+                                                            {{ $item->name }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                                <div
+                                                    class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-green-400/30 to-transparent blur">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </li>
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         @endif
-                        @if ($unfinished)
+                        @if (count($unfinished) > 0)
                             <ul
                                 class="grid grid-cols-2 gap-5 max-[1130px]:!grid-cols-3 max-[900px]:!grid-cols-2 max-[630px]:!grid-cols-1">
                                 @foreach ($unfinished as $item)
@@ -135,27 +126,11 @@
                                                     {{ $item->name }}
                                                 </h3>
                                                 <ul class="ml-5">
-                                                    <li class="list-disc text-black/70 font-semibold">
-                                                        Задача
-                                                    </li>
-                                                    <li class="list-disc text-black/70 font-semibold">
-                                                        Задача
-                                                    </li>
-                                                    <li class="list-disc text-black/70 font-semibold">
-                                                        Задача
-                                                    </li>
-                                                    <li class="list-disc text-black/70 font-semibold">
-                                                        Задача
-                                                    </li>
-                                                    <li class="list-disc text-black/70 font-semibold">
-                                                        Задача
-                                                    </li>
-                                                    <li class="list-disc text-black/70 font-semibold">
-                                                        Задача
-                                                    </li>
-                                                    <li class="list-disc text-black/70 font-semibold">
-                                                        Задача
-                                                    </li>
+                                                    @foreach ($item->tasks as $tasks)
+                                                        <li class="list-disc text-black/70 font-semibold">
+                                                            {{ $tasks->name }}
+                                                        </li>
+                                                    @endforeach
                                                 </ul>
                                                 <div
                                                     class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent blur">
@@ -212,8 +187,8 @@
     <script>
         const getChartOptions = () => {
             return {
-                series: [52.8, 26.8, 20.4],
-                colors: ["#1C64F2", "#16BDCA", "#9061F9"],
+                series: [{{ $unfinishedProjectsCount }}, {{ $finishedProjectsCount }}],
+                colors: ["#1C64F2", "#9061F9"],
                 chart: {
                     height: 420,
                     width: "100%",
@@ -234,7 +209,7 @@
                         }
                     },
                 },
-                labels: ["Direct", "Organic search", "Referrals"],
+                labels: ["Незаконченных проектов", "Завершённых проектов"],
                 dataLabels: {
                     enabled: true,
                     style: {
@@ -248,7 +223,7 @@
                 yaxis: {
                     labels: {
                         formatter: function(value) {
-                            return value + "%"
+                            return value
                         },
                     },
                 },
