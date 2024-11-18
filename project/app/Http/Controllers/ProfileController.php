@@ -65,31 +65,16 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->user()->save()) {
+            return Redirect::route('profile.edit')->with('flash_message', [
+                'status' => 'success',
+                'message' => 'Профиль успешно обновлен'
+            ]);
+        } else {
+            return Redirect::route('profile.edit')->with('flash_message', [
+                'status' => 'error',
+                'message' => 'Произошла ошибка при обновлении профиля'
+            ]);
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
-
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
     }
 }

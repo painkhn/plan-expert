@@ -1,21 +1,20 @@
 <?php
 
 use App\Http\Controllers\{ProfileController, PanelController, ProjectController,
-    InviteController, TaskController};
+    InviteController, TaskController, AdminController};
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\{isProjectMember, isAdmin};
+use App\Http\Middleware\{isProjectMember, isAdmin, isBan};
 
 Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::middleware('auth')->group(function () {
-    Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
-        Route::get('/profile/{user?}', 'index')->name('profile.index');
-        Route::post('/profile/search', 'search')->name('profile.search');
+Route::middleware('auth', isBan::class)->group(function () {
+Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
         Route::get('/profile/edit', 'edit')->name('profile.edit');
+        Route::post('/profile/search', 'search')->name('profile.search');
         Route::patch('/profile/edit', 'update')->name('profile.update');
-        Route::delete('/profile/edit', 'destroy')->name('profile.destroy');
+        Route::get('/profile/{user?}', 'index')->name('profile.index');
     });
 
     Route::controller(PanelController::class)->group(function () {
@@ -42,10 +41,13 @@ Route::middleware('auth')->group(function () {
         Route::delete('/task/delete/{id}', 'delete')->name('task.delete');
     });
 
-    Route::middleware(isAdmin::class)->group(function () {
-        Route::controller(AdminController::class)->group(function () {
-            Route::get('/admin', 'index')->name('admin.index');
-        });
+});
+
+Route::middleware(isAdmin::class)->group(function () {
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/admin', 'index')->name('admin.index');
+        Route::post('/admin/search', 'search')->name('admin.search');
+        Route::get('/user/{id}/ban', 'banUser')->name('user.ban');
     });
 });
 

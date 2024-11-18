@@ -18,7 +18,7 @@ class InviteController extends Controller
         if ($invite && $invite->status != 'awaited') {
             return redirect()->back()->with('flash_message', [
                 'status' => 'Внимание!',
-                'message' => 'Приглавшение уже отправлено'
+                'message' => 'Приглашение уже отправлено'
             ]);
         } else {
             Invite::create([
@@ -42,12 +42,12 @@ class InviteController extends Controller
         if ($status == 'accepted'){
             return redirect(route('project.show', [$id]))->with('flash_message', [
                 'status' => 'Успешно!',
-                'message' => 'Приглавшение принято'
+                'message' => 'Приглашение принято'
             ]);
         } else {
             return redirect()->back()->with('flash_message', [
                 'status' => 'Успешно!',
-                'message' => ' Приглашение было отклонено'
+                'message' => 'Приглашение было отклонено'
             ]);
         }
     }
