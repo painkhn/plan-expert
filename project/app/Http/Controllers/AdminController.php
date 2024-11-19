@@ -7,12 +7,19 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
+
+    /*
+    * Открытие админки
+    */
     public function index() {
         return view('admin.index', [
             'users' => User::all()
         ]);
     }
 
+    /*
+    * Поиск пользователя
+    */
     public function search(Request $request) {
         $validate = $request->validate([
             'word' => 'required|string',
@@ -23,6 +30,9 @@ class AdminController extends Controller
         ]);
     }
 
+    /*
+    * Блокировка пользователя
+    */
     public function banUser($id)
     {
         $user = User::findOrFail($id);

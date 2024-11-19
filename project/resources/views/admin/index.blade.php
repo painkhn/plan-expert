@@ -32,7 +32,7 @@
                 @csrf
                 <input type="search" name="word" id="word"
                     class="w-full h-10 border-gray-300 rounded-lg text-gray-800 transition-all focus:ring-2 focus:ring-purple-300 focus:!border-purple-300"
-                    placeholder="Введите ник пользователя, чтобы найти его">
+                    placeholder="Введите ник пользователя, чтобы найти его" required>
                 <button>
                     <svg class="w-10 h-10 text-gray-800 dark:text-white transition-all hover:text-purple-400 p-2 hover:bg-purple-50 rounded-md"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"

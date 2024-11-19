@@ -62,31 +62,6 @@
                                 </svg>
                             </button>
                         </form>
-                        <form action="{{ route('panel.sort') }}" method="POST">
-                            @csrf
-                            <select name="sort_by" id="sort_by"
-                                class="mb-5 w-full text-center border-gray-300 rounded-lg font-bold text-gray-800/80 transition-all hover:border-purple-300 cursor-pointer focus:ring-2 focus:!ring-purple-300 focus:!border-purple-300"
-                                onchange="this.form.submit()">
-                                <option value="">
-                                    Сортировать
-                                </option>
-                                <option value="name">
-                                    По названию
-                                </option>
-                                <option value="created_at">
-                                    По дате создания
-                                </option>
-                                <option value="task_count">
-                                    По количеству задач
-                                </option>
-                                <option value="completed">
-                                    Завершённые
-                                </option>
-                                <option value="unfinished">
-                                    Незавершённые
-                                </option>
-                            </select>
-                        </form>
                         @if (count($completed) > 0)
                             <ul
                                 class="grid grid-cols-2 gap-5 max-[1130px]:!grid-cols-3 max-[900px]:!grid-cols-2 max-[630px]:!grid-cols-1 mb-5">

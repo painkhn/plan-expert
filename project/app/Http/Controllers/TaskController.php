@@ -8,6 +8,9 @@ use App\Models\{Task, Project};
 
 class TaskController extends Controller
 {
+    /*
+    * Добавление задачи
+    */
     public function upload(Request $request) {
         $validate = $request->validate([
             'name' => 'required|string',
@@ -31,6 +34,9 @@ class TaskController extends Controller
         ]);;
     }
 
+    /*
+    * Обновление задачи
+    */
     public function update($id, Request $request) {
         $validate = $request->validate([
             'name' => 'required|string',
@@ -49,6 +55,9 @@ class TaskController extends Controller
         ]);;
     }
 
+    /*
+    * Удаление задачи
+    */
     public function delete($id) {
         $task = Task::findOrFail($id);
         $project = Project::findOrFail($task->project_id);
@@ -61,6 +70,9 @@ class TaskController extends Controller
         ]);;
     }
 
+    /*
+    * Обновление статуса задачи
+    */
     public function status($id) {
         $task = Task::findOrFail($id);
 

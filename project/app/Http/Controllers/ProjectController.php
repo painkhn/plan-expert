@@ -6,13 +6,21 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
 use App\Models\{Project, Invite};
+use App\Exports\ProjectReportExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProjectController extends Controller
 {
+    /*
+    * Открытие страницы создания проекта
+    */
     public function index() {
         return view('project.new');
     }
 
+    /*
+    * Страница открытия проекта
+    */
     public function show($id) {
         $project = Project::with(['tasks' => function ($query) {
             $query->orderBy('created_at', 'desc');
@@ -22,12 +30,15 @@ class ProjectController extends Controller
 
         return view('project.index', [
             'project' => $project,
-            'users' => Invite::with('user')->where('project_id', $project->id)->get(),
+            'users' => Invite::with('user')->where('project_id', $project->id)->where('status', 'accepted')->get(),
             'finished_tasks_count' => $finishedTasksCount,
             'unfinished_tasks_count' => $unfinishedTasksCount,
         ]);
     }
 
+    /*
+    * Добавление проекта
+    */
     public function upload(Request $request) {
         $validate = $request->validate([
             'name' => 'required|string',
@@ -54,4 +65,10 @@ class ProjectController extends Controller
         ]);
     }
 
+    /*
+    * Скачивание отчета по проекту
+    */
+    public function exel($id) {
+        return Excel::download(new ProjectReportExport($id), 'project_report.xlsx');
+    }
 }

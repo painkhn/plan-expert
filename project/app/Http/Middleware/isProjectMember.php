@@ -10,6 +10,9 @@ use Auth;
 
 class isProjectMember
 {
+    /*
+    * Миддлвар проверки на участница проекта
+    */
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::user()) {

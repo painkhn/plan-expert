@@ -15,6 +15,9 @@ use App\Models\Invite;
 class ProfileController extends Controller
 {
 
+    /*
+    * Поиск пользователя в профиле
+    */
     public function search(Request $request) {
         $user = User::where('name', $request->name)->first();
 
@@ -28,6 +31,9 @@ class ProfileController extends Controller
         }
     }
 
+    /*
+    * Открытие профиля
+    */
     public function index($user = null) {
         $finduser = null;
         if ($user) {
@@ -54,6 +60,9 @@ class ProfileController extends Controller
         ]);
     }
 
+    /*
+    * Открытие страницы редактирование профиля
+    */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -61,6 +70,9 @@ class ProfileController extends Controller
         ]);
     }
 
+    /*
+    * Обновление информации профиля
+    */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());

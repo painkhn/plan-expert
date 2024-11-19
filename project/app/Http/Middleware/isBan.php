@@ -9,6 +9,9 @@ use Auth;
 
 class isBan
 {
+    /*
+    * Миддлвар проверки на блокировку
+    */
     public function handle($request, Closure $next) {
         if (Auth::user() &&  Auth::user()->isBan == 0) {
             return $next($request);
@@ -18,7 +21,6 @@ class isBan
         }
         else{
             $response = response()->view('banned');
-            // $response->withCookie(cookie('name', 'value', 60));
             return $response;
         }
     }

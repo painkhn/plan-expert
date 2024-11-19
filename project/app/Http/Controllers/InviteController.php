@@ -8,6 +8,9 @@ use Auth;
 
 class InviteController extends Controller
 {
+    /*
+    * Приглашение в проект
+    */
     public function upload(Request $request) {
         $validate = $request->validate([
             'project' => 'required|integer|min:1',
@@ -34,13 +37,16 @@ class InviteController extends Controller
         ]);
     }
 
+    /*
+    * Принятие или отклонение приглашения
+    */
     public function update($id, Request $request) {
         $invite = Invite::findOrFail($id);
         $status = $request->input('status');
         $invite->status = $status;
         $invite->save();
         if ($status == 'accepted'){
-            return redirect(route('project.show', [$id]))->with('flash_message', [
+            return redirect(route('project.show', [$invite->project_id]))->with('flash_message', [
                 'status' => 'Успешно!',
                 'message' => 'Приглашение принято'
             ]);

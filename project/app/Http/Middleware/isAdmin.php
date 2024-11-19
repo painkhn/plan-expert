@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class isAdmin
 {
+    /*
+    * Миддлвар проверки на администратора
+    */
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::user() and  Auth::user()->isAdmin == 1) {

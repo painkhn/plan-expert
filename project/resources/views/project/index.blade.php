@@ -297,11 +297,14 @@ $tomorrow = date('m/d/Y');
                         @endif
                     @endforeach
                 </ul>
-                <div class="text-right mt-10">
-                    <a href="#!" class="text-gray-800/60 font-semibold transition-all hover:text-gray-800/100">
-                        Скачать отчёт
-                    </a>
-                </div>
+                @if ($project->user_id === Auth::id())
+                    <div class="text-right mt-10">
+                        <a href="{{ route('project.exel', [$project->id]) }}"
+                            class="text-gray-800/60 font-semibold transition-all hover:text-gray-800/100">
+                            Скачать отчёт
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </main>

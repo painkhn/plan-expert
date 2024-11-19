@@ -19,13 +19,13 @@ Route::controller(App\Http\Controllers\ProfileController::class)->group(function
 
     Route::controller(PanelController::class)->group(function () {
         Route::get('/panel', 'index')->name('panel.index');
-        Route::post('/panel/sort', 'sort')->name('panel.sort');
         Route::post('/panel/search', 'search')->name('panel.search');
     });
 
     Route::controller(ProjectController::class)->group(function () {
         Route::get('/project/new', 'index')->name('project.index');
         Route::get('/project/{id}', 'show')->name('project.show')->middleware(isProjectMember::class);
+        Route::get('/project/exel/{id}', 'exel')->name('project.exel')->middleware(isProjectMember::class);
         Route::post('/project', 'upload')->name('project.upload');
     });
 
