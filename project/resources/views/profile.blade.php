@@ -67,7 +67,7 @@
                                                                     | {{ $item->user->name }}
                                                                 </a>
                                                             </div>
-                                                            <form class="flex items-center gap-3" method="POST"
+                                                            <form class="flex items-center gap-3 m-0" method="POST"
                                                                 action="{{ route('invite.update', [$item->id]) }}">
                                                                 @csrf
                                                                 @method('PATCH')
@@ -75,7 +75,7 @@
                                                                     class="hidden" id="status">
 
                                                                 <button type="button" onclick="setStatus('rejected')">
-                                                                    <svg class="w-6 h-6 cursor-pointer transition-all text-gray-800 hover:text-red-400 dark:text-white opacity-60 hover:opacity-100 align-middle"
+                                                                    <svg class="w-6 h-6 cursor-pointer transition-all text-gray-800 hover:text-red-400 dark:text-white opacity-60 hover:opacity-100"
                                                                         aria-hidden="true"
                                                                         xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" fill="none" viewBox="0 0 24 24">
@@ -86,7 +86,7 @@
                                                                 </button>
 
                                                                 <button type="button" onclick="setStatus('accepted')">
-                                                                    <svg class="w-6 h-6 cursor-pointer transition-all text-gray-800 hover:text-green-400 dark:text-white opacity-60 hover:opacity-100 align-middle"
+                                                                    <svg class="w-6 h-6 cursor-pointer transition-all text-gray-800 hover:text-green-400 dark:text-white opacity-60 hover:opacity-100"
                                                                         aria-hidden="true"
                                                                         xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" fill="none" viewBox="0 0 24 24">
@@ -95,6 +95,9 @@
                                                                             d="M5 11.917 9.724 16.5 19 7.5" />
                                                                     </svg>
                                                                 </button>
+
+                                                                <button type="submit" class="hidden"
+                                                                    id="submit-button"></button>
                                                             </form>
                                                         </div>
                                                     </li>

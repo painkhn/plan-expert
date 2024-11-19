@@ -11,9 +11,12 @@ class AdminController extends Controller
     /*
     * Открытие админки
     */
-    public function index() {
+    public function index($user = null) {
+        if ($user == null) {
+            $user = User::all();
+        }
         return view('admin.index', [
-            'users' => User::all()
+            'users' => $user
         ]);
     }
 
@@ -25,9 +28,10 @@ class AdminController extends Controller
             'word' => 'required|string',
         ]);
 
-        return view('admin.index', [
-            'users' => User::where('name', 'like', '%' . $request->word . '%')->get()
-        ]);
+        return $this->index(User::where('name', 'like', '%' . $request->word . '%')->get());
+        // return view('admin.index', [
+        //     'users' => User::where('name', 'like', '%' . $request->word . '%')->get()
+        // ]);
     }
 
     /*
@@ -39,7 +43,7 @@ class AdminController extends Controller
         $user->isBan = $user->isBan == 0 ? 1 : 0;
         $user->save();
 
-        return redirect()->back()->with('flash_message', [
+        return redirect(route('admin.index'))->with('flash_message', [
             'status' => 'Успешно!',
             'message' => 'Изменения сохранены'
         ]);
