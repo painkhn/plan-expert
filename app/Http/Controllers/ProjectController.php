@@ -66,9 +66,23 @@ class ProjectController extends Controller
     }
 
     /*
+    * Удаление проекта
+    */
+    public function delete($id)
+    {
+        $project = Project::findOrFail($id);
+        $project->delete();
+        return redirect()->route('panel.index')->with('flash_message', [
+            'status' => 'Успешно!',
+            'message' => 'Проект удален'
+        ]);
+    }
+
+    /*
     * Скачивание отчета по проекту
     */
     public function exel($id) {
         return Excel::download(new ProjectReportExport($id), 'project_report.xlsx');
     }
+
 }

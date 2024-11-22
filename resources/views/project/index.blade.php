@@ -299,10 +299,19 @@ $tomorrow = date('m/d/Y');
                 </ul>
                 @if ($project->user_id === Auth::id())
                     <div class="text-right mt-10">
-                        <a href="{{ route('project.exel', [$project->id]) }}"
+                        {{-- <a href="{{ route('project.exel', [$project->id]) }}"
                             class="text-gray-800/60 font-semibold transition-all hover:text-gray-800/100">
                             Скачать отчёт
-                        </a>
+                        </a> --}}
+                        <form action="{{ route('project.delete', $project->id) }}" method="POST"
+                            onsubmit="return confirm('Вы уверены, что хотите удалить этот проект?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="text-gray-800/60 font-semibold transition-all hover:text-gray-800/100">
+                                Удалить проект
+                            </button>
+                        </form>
                     </div>
                 @endif
             </div>

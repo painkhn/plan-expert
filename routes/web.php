@@ -27,6 +27,7 @@ Route::controller(App\Http\Controllers\ProfileController::class)->group(function
         Route::get('/project/{id}', 'show')->name('project.show')->middleware(isProjectMember::class);
         Route::get('/project/exel/{id}', 'exel')->name('project.exel')->middleware(isProjectMember::class);
         Route::post('/project', 'upload')->name('project.upload');
+        Route::delete('/project/delete/{id}', 'delete')->name('project.delete');
     });
 
     Route::controller(InviteController::class)->group(function () {
