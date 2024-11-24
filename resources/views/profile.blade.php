@@ -16,8 +16,8 @@
                         class="w-full h-10 text-gray-800/80 bg-purple-400 transition-all hover:bg-purple-300 hover:text-gray-800/100 font-semibold rounded-lg"
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">Выход</button>
-                    <a href="{{ route('profile.edit') }}"><button
-                            class="w-full text-center h-10 text-gray-800/80 bg-purple-400 transition-all hover:bg-purple-300 hover:text-gray-800/100 font-semibold rounded-lg">Редактировать</button></a>
+                    {{-- <a href="{{ route('profile.edit') }}"><button
+                            class="w-full text-center h-10 text-gray-800/80 bg-purple-400 transition-all hover:bg-purple-300 hover:text-gray-800/100 font-semibold rounded-lg">Редактировать</button></a> --}}
                 </div>
                 <div class="w-full flex flex-col gap-5">
                     <div class="flex justify-between max-[480px]:flex-col max-[480px]:justify-start max-[480px]:gap-3">

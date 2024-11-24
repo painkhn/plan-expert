@@ -11,9 +11,9 @@ Route::get('/', function () {
 
 Route::middleware('auth', isBan::class)->group(function () {
 Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
-        Route::get('/profile/edit', 'edit')->name('profile.edit');
-        Route::post('/profile/search', 'search')->name('profile.search');
-        Route::patch('/profile/edit', 'update')->name('profile.update');
+        // Route::get('/profile/edit', 'edit')->name('profile.edit');
+        // Route::post('/profile/search', 'search')->name('profile.search');
+        // Route::patch('/profile/edit', 'update')->name('profile.update');
         Route::get('/profile/{user?}', 'index')->name('profile.index');
     });
 
